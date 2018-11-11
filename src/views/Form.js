@@ -1,13 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Field, reduxForm, change } from 'redux-form';
+import {
+  Field,
+  reduxForm,
+  change,
+} from 'redux-form';
+import { compose } from 'recompose';
+import { func, bool } from 'prop-types';
 
 import playerActions from '../state/actions/player';
+import * as s from '../state/selectors/player';
 import { roll } from '../utils/playerUtils';
+import { toJS } from '../utils/utils';
+
+
+const propTypes = {
+  changeFieldValue: func.isRequired,
+  createPlayer: func.isRequired,
+  handleSubmit: func.isRequired,
+  submitting: bool.isRequired,
+};
 
 class Form extends React.Component {
+  static propTypes = propTypes;
+
   generateAbilityScore = (fieldName, sides, numberOfDice) => {
     const rollArray = [];
+    const { changeFieldValue } = this.props;
+
     for (let i = 0; i < numberOfDice; i++) {
       const diceRoll = roll(sides);
       rollArray.push(diceRoll);
@@ -24,13 +44,15 @@ class Form extends React.Component {
 
     const total = rollArray.reduce((item, total) => item + total);
     if (total <= 20) {
-      this.props.changeFieldValue(fieldName, total);
+      changeFieldValue(fieldName, total);
     } else {
-      this.props.changeFieldValue(fieldName, 20);
+      changeFieldValue(fieldName, 20);
     }
   };
 
   submit = (values) => {
+    const { createPlayer } = this.props;
+
     const newPlayer = {
       mainStats: {
         strength: {
@@ -63,11 +85,12 @@ class Form extends React.Component {
         name: values.category,
       },
     };
-    this.props.createPlayer(newPlayer);
+    createPlayer(newPlayer);
   };
 
   render() {
     const { handleSubmit, submitting } = this.props;
+
     return (
       <form onSubmit={handleSubmit(this.submit)}>
         <div>
@@ -194,14 +217,14 @@ class Form extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  player: state.player,
+  player: {},
   initialValues: {
-    strength: 10,
-    dexterity: 10,
-    constitution: 10,
-    intelligence: 10,
-    wisdom: 10,
-    charisma: 10,
+    strength: s.getPlayerAbility(state, 'strength'),
+    dexterity: s.getPlayerAbility(state, 'dexterity'),
+    constitution: s.getPlayerAbility(state, 'constitution'),
+    intelligence: s.getPlayerAbility(state, 'intelligence'),
+    wisdom: s.getPlayerAbility(state, 'wisdom'),
+    charisma: s.getPlayerAbility(state, 'charisma'),
   },
 });
 
@@ -214,17 +237,19 @@ const mapDispatchToProps = dispatch => ({
     dispatch(playerActions.health.set(player.category));
   },
   changeFieldValue(field, value) {
-    dispatch(change('player', field, value));
+    dispatch(change(s.formName, field, value));
   },
 });
 
-const PlayerForm = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   reduxForm({
-    form: 'player',
-  })(Form),
-);
-
-export default PlayerForm;
+    form: s.formName,
+    enableReinitialize: true,
+    keepDirtyOnReinitialize: true,
+  }),
+  toJS,
+)(Form);
