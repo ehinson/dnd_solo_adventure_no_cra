@@ -9,6 +9,8 @@ export const defaultState = fromJS({
   },
   category: {
     name: null,
+    spells: {},
+    features: {},
   },
   level: {
     currentLevel: 1,

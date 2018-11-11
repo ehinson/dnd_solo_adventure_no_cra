@@ -70,7 +70,7 @@ export const RightSide = styled.div`
   -webkit-backface-visibility: hidden;
   background: yellow;
   right: 0;
-	color: black;
+  color: black;
   outline: 1px solid yellow;
   transition: transform 0.6s;
   transform: ${p => (p.rightOpen ? 'translateX(-150%)' : p.leftOpen ? 'translateX(60%)' : 'translateX(0)')};

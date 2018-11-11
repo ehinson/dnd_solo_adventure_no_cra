@@ -1,7 +1,7 @@
 {
   "name": "dnd_solo_adventure",
   "version": "1.0.0",
-  "description": "",
+  "description": "DnD solo adventure",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
     "start:dev": "webpack-dev-server --open --mode development"
   },
   "keywords": [],
-  "author": "",
+  "author": "Erin (Q.) Hinson",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.1.5",
