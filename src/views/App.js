@@ -1,15 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
-    BrowserRouter as Router,
-    Route,
+  BrowserRouter as Router,
+  Route,
 } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import Home from './Home';
 import Topics from './Topic';
 import About from './About';
 import Ring from './Ring';
 import Combat from './Combat';
+
+
+const GlobalStyle = createGlobalStyle`
+  html, body, #root {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    overflow-y: scroll;
+    background: #333;
+  }
+
+  *, *:after, *:before {
+    box-sizing: border-box;
+  }
+`;
 
 export const SplitLayoutContainer = styled.div`
   position: relative;
@@ -142,20 +162,18 @@ export const PageLeft = styled(Page)`
   `};
 `;
 
-class App extends Component {
-    render() {
-        return (
-            <Router>
-                <SplitLayoutContainer>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/about" component={About} />
-                    <Route path="/ring" component={Ring} />
-                    <Route path="/topics" component={Topics} />
-                    <Route path="/combat" component={Combat} />
-                </SplitLayoutContainer>
-            </Router>
-        );
-    }
-}
-
+const App = () => (
+  <React.Fragment>
+    <Router>
+      <SplitLayoutContainer>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/ring" component={Ring} />
+        <Route path="/topics" component={Topics} />
+        <Route path="/combat" component={Combat} />
+      </SplitLayoutContainer>
+    </Router>
+    <GlobalStyle />
+  </React.Fragment>
+);
 export default App;
