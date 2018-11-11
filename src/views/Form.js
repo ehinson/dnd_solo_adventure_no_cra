@@ -74,6 +74,7 @@ class Form extends React.Component {
           <label htmlFor="strength">strength</label>
           <Field
             name="strength"
+            id="strength"
             component="input"
             type="number"
             min="-10"
@@ -89,6 +90,7 @@ class Form extends React.Component {
           <label htmlFor="dexterity">dexterity</label>
           <Field
             name="dexterity"
+            id="dexterity"
             component="input"
             type="number"
             min="-10"
@@ -104,6 +106,7 @@ class Form extends React.Component {
           <label htmlFor="constitution">constitution</label>
           <Field
             name="constitution"
+            id="constitution"
             component="input"
             type="number"
             min="-10"
@@ -119,6 +122,7 @@ class Form extends React.Component {
           <label htmlFor="intelligence">intelligence</label>
           <Field
             name="intelligence"
+            id="intelligence"
             component="input"
             type="number"
             min="-10"
@@ -134,6 +138,7 @@ class Form extends React.Component {
           <label htmlFor="wisdom">wisdom</label>
           <Field
             name="wisdom"
+            id="wisdom"
             component="input"
             type="number"
             min="-10"
@@ -149,6 +154,7 @@ class Form extends React.Component {
           <label htmlFor="charisma">charisma</label>
           <Field
             name="charisma"
+            id="charisma"
             component="input"
             type="number"
             min="-10"
@@ -161,9 +167,9 @@ class Form extends React.Component {
           />
         </div>
         <div>
-          <label>Race</label>
+          <label htmlFor="race">Race</label>
           <div>
-            <Field name="race" component="select">
+            <Field name="race" id="race" component="select">
               <option />
               <option value="human">Human</option>
               <option value="elf">Elf</option>
@@ -172,9 +178,9 @@ class Form extends React.Component {
           </div>
         </div>
         <div>
-          <label>Category</label>
+          <label htmlFor="category">Category</label>
           <div>
-            <Field name="category" component="select">
+            <Field name="category" id="category" component="select">
               <option />
               <option value="fighter">Fighter</option>
               <option value="wizard">Wizard</option>
