@@ -14,18 +14,19 @@ export default class Combat extends React.Component {
     super(props);
     this.state = {
       visited: false,
-
     };
   }
 
   render() {
+    const { visited } = this.state;
+
     return (
       <SplitLayoutContainer>
         <SplitLayout>
           <FullScreen>
             <Content>
               Combat<br />
-              { this.state.visited }
+              { visited }
               <Form />
               <Link to="/">Link to Home</Link>
             </Content>

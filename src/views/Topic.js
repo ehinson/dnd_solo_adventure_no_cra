@@ -1,11 +1,23 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+import { object } from 'prop-types';
+
+
+const topicPropTypes = {
+  match: object.isRequired,
+};
 
 const Topic = ({ match }) => (
   <div>
     <h3>{ match.params.topicId }</h3>
   </div>
 );
+
+Topic.propTypes = topicPropTypes;
+
+const topicsPropTypes = {
+  match: object.isRequired,
+};
 
 const Topics = ({ match }) => (
   <div>
@@ -30,5 +42,7 @@ const Topics = ({ match }) => (
     />
   </div>
 );
+
+Topics.propTypes = topicsPropTypes;
 
 export default Topics;

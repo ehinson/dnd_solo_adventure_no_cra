@@ -1,4 +1,10 @@
+import { getFormValues, formValueSelector } from 'redux-form';
+
 export const formName = 'player';
+
+export const getPlayerFormValues = state => getFormValues(formName)(state);
+
+export const getPlayerFieldValues = (state, fieldNames) => formValueSelector(formName)(state, ...fieldNames);
 
 export const getPlayer = state => state.player || state;
 

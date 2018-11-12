@@ -4,9 +4,15 @@ import {
   Field,
   reduxForm,
   change,
+  FormSection,
 } from 'redux-form';
 import { compose } from 'recompose';
-import { func, bool } from 'prop-types';
+import { func, bool, object } from 'prop-types';
+import { required } from 'redux-form-validators';
+
+import {
+  StyledForm,
+} from './App';
 
 import playerActions from '../state/actions/player';
 import * as s from '../state/selectors/player';
@@ -14,11 +20,121 @@ import { roll } from '../utils/playerUtils';
 import { toJS } from '../utils/utils';
 
 
+const abilitiesPropTypes = {
+  generateAbilityScore: func.isRequired,
+};
+
+// map over array to build this component
+const Abilities = props => (
+  <React.Fragment>
+    <div>
+      <label htmlFor="strength">strength</label>
+      <Field
+        name="strength"
+        id="strength"
+        component="input"
+        type="number"
+        min="-10"
+        max="20"
+      />
+      <input
+        type="button"
+        value="Roll"
+        onClick={() => props.generateAbilityScore('abilities.strength', 6, 4)}
+      />
+    </div>
+    <div>
+      <label htmlFor="dexterity">dexterity</label>
+      <Field
+        name="dexterity"
+        id="dexterity"
+        component="input"
+        type="number"
+        min="-10"
+        max="20"
+      />
+      <input
+        type="button"
+        value="Roll"
+        onClick={() => props.generateAbilityScore('abilities.dexterity', 6, 4)}
+      />
+    </div>
+    <div>
+      <label htmlFor="constitution">constitution</label>
+      <Field
+        name="constitution"
+        id="constitution"
+        component="input"
+        type="number"
+        min="-10"
+        max="20"
+      />
+      <input
+        type="button"
+        value="Roll"
+        onClick={() => props.generateAbilityScore('abilities.constitution', 6, 4)}
+      />
+    </div>
+    <div>
+      <label htmlFor="intelligence">intelligence</label>
+      <Field
+        name="intelligence"
+        id="intelligence"
+        component="input"
+        type="number"
+        min="-10"
+        max="20"
+      />
+      <input
+        type="button"
+        value="Roll"
+        onClick={() => props.generateAbilityScore('abilities.intelligence', 6, 4)}
+      />
+    </div>
+    <div>
+      <label htmlFor="wisdom">wisdom</label>
+      <Field
+        name="wisdom"
+        id="wisdom"
+        component="input"
+        type="number"
+        min="-10"
+        max="20"
+      />
+      <input
+        type="button"
+        value="Roll"
+        onClick={() => props.generateAbilityScore('abilities.wisdom', 6, 4)}
+      />
+    </div>
+    <div>
+      <label htmlFor="charisma">charisma</label>
+      <Field
+        name="charisma"
+        id="charisma"
+        component="input"
+        type="number"
+        min="-10"
+        max="20"
+      />
+      <input
+        type="button"
+        value="Roll"
+        onClick={() => props.generateAbilityScore('abilities.charisma', 6, 4)}
+      />
+    </div>
+  </React.Fragment>
+);
+
+Abilities.propTypes = abilitiesPropTypes;
+
 const propTypes = {
   changeFieldValue: func.isRequired,
   createPlayer: func.isRequired,
   handleSubmit: func.isRequired,
   submitting: bool.isRequired,
+  valid: bool.isRequired,
+  player: object,
 };
 
 class Form extends React.Component {
@@ -56,22 +172,22 @@ class Form extends React.Component {
     const newPlayer = {
       mainStats: {
         strength: {
-          score: values.strength,
+          score: values.abilities.strength,
         },
         dexterity: {
-          score: values.dexterity,
+          score: values.abilities.dexterity,
         },
         constitution: {
-          score: values.constitution,
+          score: values.abilities.constitution,
         },
         intelligence: {
-          score: values.intelligence,
+          score: values.abilities.intelligence,
         },
         wisdom: {
-          score: values.wisdom,
+          score: values.abilities.wisdom,
         },
         charisma: {
-          score: values.charisma,
+          score: values.abilities.charisma,
         },
       },
       race: {
@@ -89,110 +205,19 @@ class Form extends React.Component {
   };
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const {
+      handleSubmit,
+      submitting,
+      player,
+      valid,
+    } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.submit)}>
-        <div>
-          <label htmlFor="strength">strength</label>
-          <Field
-            name="strength"
-            id="strength"
-            component="input"
-            type="number"
-            min="-10"
-            max="20"
-          />
-          <input
-            type="button"
-            value="Roll"
-            onClick={() => this.generateAbilityScore('strength', 6, 4)}
-          />
-        </div>
-        <div>
-          <label htmlFor="dexterity">dexterity</label>
-          <Field
-            name="dexterity"
-            id="dexterity"
-            component="input"
-            type="number"
-            min="-10"
-            max="20"
-          />
-          <input
-            type="button"
-            value="Roll"
-            onClick={() => this.generateAbilityScore('dexterity', 6, 4)}
-          />
-        </div>
-        <div>
-          <label htmlFor="constitution">constitution</label>
-          <Field
-            name="constitution"
-            id="constitution"
-            component="input"
-            type="number"
-            min="-10"
-            max="20"
-          />
-          <input
-            type="button"
-            value="Roll"
-            onClick={() => this.generateAbilityScore('constitution', 6, 4)}
-          />
-        </div>
-        <div>
-          <label htmlFor="intelligence">intelligence</label>
-          <Field
-            name="intelligence"
-            id="intelligence"
-            component="input"
-            type="number"
-            min="-10"
-            max="20"
-          />
-          <input
-            type="button"
-            value="Roll"
-            onClick={() => this.generateAbilityScore('intelligence', 6, 4)}
-          />
-        </div>
-        <div>
-          <label htmlFor="wisdom">wisdom</label>
-          <Field
-            name="wisdom"
-            id="wisdom"
-            component="input"
-            type="number"
-            min="-10"
-            max="20"
-          />
-          <input
-            type="button"
-            value="Roll"
-            onClick={() => this.generateAbilityScore('wisdom', 6, 4)}
-          />
-        </div>
-        <div>
-          <label htmlFor="charisma">charisma</label>
-          <Field
-            name="charisma"
-            id="charisma"
-            component="input"
-            type="number"
-            min="-10"
-            max="20"
-          />
-          <input
-            type="button"
-            value="Roll"
-            onClick={() => this.generateAbilityScore('charisma', 6, 4)}
-          />
-        </div>
+      <StyledForm onSubmit={handleSubmit(this.submit)}>
         <div>
           <label htmlFor="race">Race</label>
           <div>
-            <Field name="race" id="race" component="select">
+            <Field name="race" id="race" component="select" validate={required()}>
               <option />
               <option value="human">Human</option>
               <option value="elf">Elf</option>
@@ -203,28 +228,38 @@ class Form extends React.Component {
         <div>
           <label htmlFor="category">Category</label>
           <div>
-            <Field name="category" id="category" component="select">
+            <Field name="category" id="category" component="select" validate={required()}>
               <option />
               <option value="fighter">Fighter</option>
               <option value="wizard">Wizard</option>
             </Field>
           </div>
         </div>
-        <input type="submit" value="Submit" disabled={submitting} />
-      </form>
+        { player && player.race && player.category && (
+          <FormSection name="abilities">
+            <Abilities generateAbilityScore={this.generateAbilityScore} />
+          </FormSection>
+        )
+        }
+        <input type="submit" value="Submit" disabled={submitting || !valid} />
+      </StyledForm>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  player: {},
+  player: s.getPlayerFormValues(state),
   initialValues: {
-    strength: s.getPlayerAbility(state, 'strength'),
-    dexterity: s.getPlayerAbility(state, 'dexterity'),
-    constitution: s.getPlayerAbility(state, 'constitution'),
-    intelligence: s.getPlayerAbility(state, 'intelligence'),
-    wisdom: s.getPlayerAbility(state, 'wisdom'),
-    charisma: s.getPlayerAbility(state, 'charisma'),
+    race: '',
+    category: '',
+    abilities: {
+      strength: s.getPlayerAbility(state, 'strength'),
+      dexterity: s.getPlayerAbility(state, 'dexterity'),
+      constitution: s.getPlayerAbility(state, 'constitution'),
+      intelligence: s.getPlayerAbility(state, 'intelligence'),
+      wisdom: s.getPlayerAbility(state, 'wisdom'),
+      charisma: s.getPlayerAbility(state, 'charisma'),
+    },
   },
 });
 

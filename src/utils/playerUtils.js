@@ -36,7 +36,7 @@ export const skills = {
   },
 };
 
-export function setAbilityModifier(statObject, state) {
+export function setAbilityModifier(statObject, state) {  
   const newStatObject = {};
 
   Object.keys(statObject).forEach((ability) => {

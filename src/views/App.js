@@ -11,6 +11,8 @@ import About from './About';
 import Ring from './Ring';
 import Combat from './Combat';
 
+import media from '../utils/styleUtils';
+
 
 const GlobalStyle = createGlobalStyle`
   html, body, #root {
@@ -85,7 +87,6 @@ export const FullScreen = styled.div`
   text-align: center;
   -webkit-backface-visibility: hidden;
   background: blue;
-
 `;
 
 export const Content = styled.div`
@@ -160,6 +161,10 @@ export const PageLeft = styled(Page)`
     overflow: auto;
     height: auto;
   `};
+`;
+
+export const StyledForm = styled.form`
+  background: yellow;
 `;
 
 const App = () => (
